@@ -9,9 +9,13 @@ import androidx.core.os.bundleOf
 import com.example.test.AddEditContactScreen.AddEditContactFragment
 import com.example.test.Model.Contact
 import com.example.test.R
+import com.example.test.Utils.CONTACT
+import com.example.test.Utils.EDIT
+import com.example.test.Utils.REMOVE_CONTACT
 import com.example.test.databinding.FragmentContactDetailBinding
 
 class ContactDetailFragment : Fragment() {
+
 
     private var contact: Contact? = null
 
@@ -51,10 +55,10 @@ class ContactDetailFragment : Fragment() {
     private fun listeners() {
         binding.apply {
             btnRemove.setOnClickListener {
-                val bundle = bundleOf("contact" to contact?.id)
+                val bundle = bundleOf(CONTACT to contact?.id)
 
                 parentFragmentManager.run {
-                    setFragmentResult("removeContact", bundle)
+                    setFragmentResult(REMOVE_CONTACT, bundle)
                     parentFragmentManager.popBackStack()
                 }
 
@@ -62,7 +66,7 @@ class ContactDetailFragment : Fragment() {
             btnEdit.setOnClickListener {
                 parentFragmentManager.beginTransaction().run {
                     replace(R.id.fcvContainer, AddEditContactFragment.newInstance(contact))
-                    addToBackStack("Edit")
+                    addToBackStack(EDIT)
                     commit()
                 }
             }
@@ -70,7 +74,6 @@ class ContactDetailFragment : Fragment() {
     }
 
     companion object {
-        private const val CONTACT = "contact"
 
 
         fun newInstance(contact: Contact) =

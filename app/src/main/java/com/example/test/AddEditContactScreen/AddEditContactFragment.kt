@@ -8,6 +8,10 @@ import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
 import com.example.test.Model.Contact
+import com.example.test.Utils.CONTACT
+import com.example.test.Utils.DETAIL
+import com.example.test.Utils.NEW_CONTACT
+import com.example.test.Utils.UPDATED_CONTACT
 import com.example.test.databinding.FragmentAddContactBinding
 
 
@@ -22,14 +26,20 @@ class AddEditContactFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddContactBinding.inflate(layoutInflater, container, false)
-        contact = arguments?.getParcelable("contact")
+        contact = arguments?.getParcelable(CONTACT)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setUp()
+        listeners()
 
+
+    }
+
+    private fun setUp() {
         contact?.let {
 
             binding.etName.setText(it.name)
@@ -37,11 +47,15 @@ class AddEditContactFragment : Fragment() {
 
         }
 
+    }
+
+    private fun listeners() {
         binding.btnConfirm.setOnClickListener {
             contact?.let {
                 editContact(it)
             } ?: addContact()
         }
+
     }
 
     private fun editContact(contact: Contact) {
@@ -50,12 +64,12 @@ class AddEditContactFragment : Fragment() {
 
         val editedContact =
             Contact(id = contact.id, name = name, phoneNumber = phoneNumber, img = null)
-        val bundle = bundleOf("contact" to editedContact)
+        val bundle = bundleOf(CONTACT to editedContact)
 
         parentFragmentManager.run {
-            setFragmentResult("updatedContact", bundle)
+            setFragmentResult(UPDATED_CONTACT, bundle)
             popBackStack()
-            popBackStack("Detail", FragmentManager.POP_BACK_STACK_INCLUSIVE)
+            popBackStack(DETAIL, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }
 
@@ -65,9 +79,9 @@ class AddEditContactFragment : Fragment() {
         val phoneNumber: String = binding.etPhoneNumber.text.toString()
 
         val contact = Contact(name = name, phoneNumber = phoneNumber, img = null)
-        val bundle = bundleOf("contact" to contact)
+        val bundle = bundleOf(CONTACT to contact)
 
-        parentFragmentManager.setFragmentResult("newContact", bundle)
+        parentFragmentManager.setFragmentResult(NEW_CONTACT, bundle)
         parentFragmentManager.popBackStack()
     }
 
@@ -76,10 +90,11 @@ class AddEditContactFragment : Fragment() {
         _binding = null
     }
 
+
     companion object {
         fun newInstance(contact: Contact? = null) = AddEditContactFragment().apply {
             arguments = Bundle().apply {
-                putParcelable("contact", contact)
+                putParcelable(CONTACT, contact)
             }
         }
     }

@@ -11,7 +11,44 @@
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fcvContainer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@id/btnCallDialog"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/txtContact" />
+
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/txtContact"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/contancts"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnCallDialog"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/call"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/btnContacts"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btnContacts"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:src="@drawable/vector"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/btnCallDialog" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

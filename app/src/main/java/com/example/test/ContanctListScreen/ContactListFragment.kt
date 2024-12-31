@@ -11,15 +11,21 @@ import com.example.test.AddEditContactScreen.AddEditContactFragment
 import com.example.test.Model.Contact
 import com.example.test.ContactDetailScreen.ContactDetailFragment
 import com.example.test.R
+import com.example.test.Utils.CONTACT
+import com.example.test.Utils.DETAIL
+import com.example.test.Utils.Database.contactData
+import com.example.test.Utils.NEW_CONTACT
+import com.example.test.Utils.REMOVE_CONTACT
+import com.example.test.Utils.UPDATED_CONTACT
 import com.example.test.Utils.getContactData
 import com.example.test.databinding.FragmentContactListBinding
 
 
 class ContactListFragment : Fragment() {
+
     private var _binding: FragmentContactListBinding? = null
     private val binding get() = _binding!!
 
-    private val contactData = getContactData()
 
     private val contactListAdapter by lazy {
         ContactListAdapter(onEdit = { contact ->
@@ -103,15 +109,15 @@ class ContactListFragment : Fragment() {
 
         parentFragmentManager.beginTransaction().run {
             replace(R.id.fcvContainer, ContactDetailFragment.newInstance(contact))
-            addToBackStack("Detail")
+            addToBackStack(DETAIL)
             commit()
         }
     }
 
 
     private fun addNewContact() {
-        parentFragmentManager.setFragmentResultListener("newContact", this) { _, bundle ->
-            val contact = bundle.getParcelable<Contact>("contact")
+        parentFragmentManager.setFragmentResultListener(NEW_CONTACT, this) { _, bundle ->
+            val contact = bundle.getParcelable<Contact>(CONTACT)
             contact?.let {
                 contactData.add(0, it)
             }
@@ -121,8 +127,8 @@ class ContactListFragment : Fragment() {
     }
 
     private fun updateNewContact() {
-        parentFragmentManager.setFragmentResultListener("updatedContact", this) { _, bundle ->
-            val contact = bundle.getParcelable<Contact>("contact")!!
+        parentFragmentManager.setFragmentResultListener(UPDATED_CONTACT, this) { _, bundle ->
+            val contact = bundle.getParcelable<Contact>(CONTACT)!!
             val idx = contactData.indexOfFirst { it.id == contact.id }
             contactData[idx] = contact
             contactListAdapter.submitList(contactData.toList())
@@ -131,8 +137,8 @@ class ContactListFragment : Fragment() {
 
     private fun removeNewContract() {
 
-        parentFragmentManager.setFragmentResultListener("removeContact", this) { _, bundle ->
-            val contactId = bundle.getString("contact")
+        parentFragmentManager.setFragmentResultListener(REMOVE_CONTACT, this) { _, bundle ->
+            val contactId = bundle.getString(CONTACT)
             val idx = contactData.indexOfFirst { it.id == contactId }
             contactData.removeAt(idx)
             contactListAdapter.submitList(contactData.toList())
