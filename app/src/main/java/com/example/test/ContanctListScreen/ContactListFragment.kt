@@ -8,17 +8,12 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.test.AddEditContactScreen.AddEditContactFragment
 import com.example.test.Model.Contact
-import com.example.test.ContactDetailScreen.ContactDetailFragment
-import com.example.test.R
 import com.example.test.Utils.CONTACT
-import com.example.test.Utils.DETAIL
 import com.example.test.Utils.Database.contactData
 import com.example.test.Utils.NEW_CONTACT
 import com.example.test.Utils.REMOVE_CONTACT
 import com.example.test.Utils.UPDATED_CONTACT
-import com.example.test.Utils.getContactData
 import com.example.test.databinding.FragmentContactListBinding
 
 
@@ -61,9 +56,9 @@ class ContactListFragment : Fragment() {
     }
 
     private fun setUp() {
-        binding.apply {
-            rvContanct.adapter = contactListAdapter
-            rvContanct.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvContanct.run {
+            adapter = contactListAdapter
+            layoutManager = LinearLayoutManager(requireContext())
             contactListAdapter.submitList(contactData.toList())
         }
 

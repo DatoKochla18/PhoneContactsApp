@@ -33,8 +33,7 @@ class CallDialogFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCallDialogBinding.inflate(layoutInflater, container, false)
 
@@ -59,12 +58,19 @@ class CallDialogFragment : Fragment() {
 
         if (text.isEmpty()) {
             dialogResultAdapter.submitList(mutableListOf<Contact>())
+            binding.apply {
+                btnCamera.visibility = View.GONE
+                btnBackSpace.visibility = View.GONE
+            }
         } else {
-            dialogResultAdapter.submitList(
-                Database.contactData.filter {
-                    it.phoneNumber.contains(text)
-                }
-            )
+            dialogResultAdapter.submitList(Database.contactData.filter {
+                it.phoneNumber.contains(text)
+            })
+            binding.apply {
+
+                btnCamera.visibility = View.VISIBLE
+                btnBackSpace.visibility = View.VISIBLE
+            }
         }
     }
 

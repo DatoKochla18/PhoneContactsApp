@@ -30,8 +30,14 @@ class DialogAdapter(
         RecyclerView.ViewHolder(binding.root) {
         fun onBind() {
             val dialog = dialogList[adapterPosition]
-            binding.btnDialogNumber.apply {
+            binding.txtDialogNumber.apply {
                 text = dialog.id
+                setOnClickListener {
+                    onClick(dialog)
+                }
+            }
+            binding.txtDialogText.apply {
+                text = dialog.text
                 setOnClickListener {
                     onClick(dialog)
                 }

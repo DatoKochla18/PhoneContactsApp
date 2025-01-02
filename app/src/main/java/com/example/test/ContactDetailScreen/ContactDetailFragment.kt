@@ -9,18 +9,18 @@ import androidx.core.os.bundleOf
 import androidx.navigation.NavOptions
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.example.test.AddEditContactScreen.AddEditContactFragment
 import com.example.test.Model.Contact
 import com.example.test.R
 import com.example.test.Utils.CONTACT
-import com.example.test.Utils.EDIT
 import com.example.test.Utils.REMOVE_CONTACT
 import com.example.test.databinding.FragmentContactDetailBinding
 
 class ContactDetailFragment : Fragment() {
 
     private val args: ContactDetailFragmentArgs by navArgs()
+
     private lateinit var contact: Contact
+
     private var _binding: FragmentContactDetailBinding? = null
     private val binding get() = _binding!!
 

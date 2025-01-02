@@ -1,16 +1,13 @@
 package com.example.test.AddEditContactScreen
-
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
-import androidx.fragment.app.FragmentManager
 import androidx.navigation.fragment.navArgs
 import com.example.test.Model.Contact
 import com.example.test.Utils.CONTACT
-import com.example.test.Utils.DETAIL
 import com.example.test.Utils.NEW_CONTACT
 import com.example.test.Utils.UPDATED_CONTACT
 import com.example.test.databinding.FragmentAddContactBinding
@@ -18,6 +15,7 @@ import com.example.test.databinding.FragmentAddContactBinding
 
 class AddEditContactFragment : Fragment() {
     private val args: AddEditContactFragmentArgs by navArgs()
+
     private var _binding: FragmentAddContactBinding? = null
     private val binding get() = _binding!!
 
@@ -42,15 +40,11 @@ class AddEditContactFragment : Fragment() {
 
     private fun setUp() {
         contact?.let {
-
             binding.apply {
                 etName.setText(it.name)
                 etPhoneNumber.setText(it.phoneNumber)
             }
-
-
         }
-
     }
 
     private fun listeners() {
