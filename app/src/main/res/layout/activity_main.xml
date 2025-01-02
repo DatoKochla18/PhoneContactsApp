@@ -37,8 +37,9 @@
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnvNavigation"
         android:layout_width="0dp"
-        android:layout_height="64dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
+        app:itemIconTint="@drawable/bottom_nav_bar_text_color"
         android:background="@android:color/transparent"
         app:itemTextColor="@drawable/bottom_nav_bar_text_color"
         app:layout_constraintBottom_toBottomOf="parent"

@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.test.Model.Contact
 import com.example.test.Model.Dialog
 import com.example.test.R
 import com.example.test.Utils.Database
@@ -51,15 +52,20 @@ class CallDialogFragment : Fragment() {
         setUpDialogAdapter()
         setUpDialogResultAdapter()
 
-        binding.txtCallNumber.doAfterTextChanged {
-            dialogResultAdapter.submitList(Database.contactData.filter {
-                it.phoneNumber.contains(
-                    binding.txtCallNumber.text
-                )
-            }
+
+    }
+
+    private fun search(text: String) {
+
+        if (text.isEmpty()) {
+            dialogResultAdapter.submitList(mutableListOf<Contact>())
+        } else {
+            dialogResultAdapter.submitList(
+                Database.contactData.filter {
+                    it.phoneNumber.contains(text)
+                }
             )
         }
-
     }
 
     private fun listeners() {
@@ -72,6 +78,10 @@ class CallDialogFragment : Fragment() {
                 binding.txtCallNumber.text = ""
                 true
             }
+        }
+        binding.txtCallNumber.doAfterTextChanged { editText ->
+            val searchText = editText?.toString() ?: ""
+            search(searchText)
         }
 
     }
