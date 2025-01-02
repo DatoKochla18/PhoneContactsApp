@@ -9,4 +9,6 @@
     <string name="mobile">Mobile</string>
     <string name="edit">Edit</string>
     <string name="remove">Remove</string>
+    <string name="calldialog">callDIalog</string>
+    <string name="contactlist">contactList</string>
 </resources>

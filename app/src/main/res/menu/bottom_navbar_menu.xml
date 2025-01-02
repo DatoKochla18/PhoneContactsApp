@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/callDialogFragment"
+        android:icon="@drawable/call"
+        android:title="@string/calldialog" />
+    <item
+        android:id="@+id/contactListFragment"
+        android:icon="@drawable/vector"
+        android:title="@string/contactlist" />
+
+</menu>

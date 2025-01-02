@@ -6,6 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
+import androidx.navigation.NavOptions
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.test.AddEditContactScreen.AddEditContactFragment
 import com.example.test.Model.Contact
 import com.example.test.R
@@ -16,16 +19,15 @@ import com.example.test.databinding.FragmentContactDetailBinding
 
 class ContactDetailFragment : Fragment() {
 
-
-    private var contact: Contact? = null
-
+    private val args: ContactDetailFragmentArgs by navArgs()
+    private lateinit var contact: Contact
     private var _binding: FragmentContactDetailBinding? = null
     private val binding get() = _binding!!
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
-            contact = it.getParcelable(CONTACT)
+            contact = args.contact
 
         }
     }
@@ -47,8 +49,8 @@ class ContactDetailFragment : Fragment() {
 
     private fun setUp() {
         binding.apply {
-            txtName.text = contact?.name ?: ""
-            txtMobileValue.text = contact?.phoneNumber ?: ""
+            txtName.text = contact.name
+            txtMobileValue.text = contact.phoneNumber
         }
     }
 
@@ -64,24 +66,20 @@ class ContactDetailFragment : Fragment() {
 
             }
             btnEdit.setOnClickListener {
-                parentFragmentManager.beginTransaction().run {
-                    replace(R.id.fcvContainer, AddEditContactFragment.newInstance(contact))
-                    addToBackStack(EDIT)
-                    commit()
-                }
+                findNavController().navigate(
+                    ContactDetailFragmentDirections.actionContactDetailFragmentToAddEditContactFragment(
+                        contact = contact
+                    ),
+                    NavOptions.Builder()
+                        .setPopUpTo(R.id.contactDetailFragment, true)
+                        .build()
+                )
+
+
+            }
+            btnArrowBack.setOnClickListener {
+                parentFragmentManager.popBackStack()
             }
         }
-    }
-
-    companion object {
-
-
-        fun newInstance(contact: Contact) =
-            ContactDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putParcelable(CONTACT, contact)
-
-                }
-            }
     }
 }

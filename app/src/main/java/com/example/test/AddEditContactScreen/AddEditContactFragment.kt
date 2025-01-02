@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.fragment.app.FragmentManager
+import androidx.navigation.fragment.navArgs
 import com.example.test.Model.Contact
 import com.example.test.Utils.CONTACT
 import com.example.test.Utils.DETAIL
@@ -16,17 +17,17 @@ import com.example.test.databinding.FragmentAddContactBinding
 
 
 class AddEditContactFragment : Fragment() {
+    private val args: AddEditContactFragmentArgs by navArgs()
     private var _binding: FragmentAddContactBinding? = null
     private val binding get() = _binding!!
 
     private var contact: Contact? = null
 
     override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
         _binding = FragmentAddContactBinding.inflate(layoutInflater, container, false)
-        contact = arguments?.getParcelable(CONTACT)
+        contact = args.contact
         return binding.root
     }
 
@@ -42,8 +43,11 @@ class AddEditContactFragment : Fragment() {
     private fun setUp() {
         contact?.let {
 
-            binding.etName.setText(it.name)
-            binding.etPhoneNumber.setText(it.phoneNumber)
+            binding.apply {
+                etName.setText(it.name)
+                etPhoneNumber.setText(it.phoneNumber)
+            }
+
 
         }
 
@@ -54,6 +58,9 @@ class AddEditContactFragment : Fragment() {
             contact?.let {
                 editContact(it)
             } ?: addContact()
+        }
+        binding.btnArrowBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
         }
 
     }
@@ -69,7 +76,6 @@ class AddEditContactFragment : Fragment() {
         parentFragmentManager.run {
             setFragmentResult(UPDATED_CONTACT, bundle)
             popBackStack()
-            popBackStack(DETAIL, FragmentManager.POP_BACK_STACK_INCLUSIVE)
         }
     }
 
@@ -88,14 +94,5 @@ class AddEditContactFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
-    }
-
-
-    companion object {
-        fun newInstance(contact: Contact? = null) = AddEditContactFragment().apply {
-            arguments = Bundle().apply {
-                putParcelable(CONTACT, contact)
-            }
-        }
     }
 }

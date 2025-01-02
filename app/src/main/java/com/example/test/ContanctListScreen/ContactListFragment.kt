@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.widget.doAfterTextChanged
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.test.AddEditContactScreen.AddEditContactFragment
 import com.example.test.Model.Contact
@@ -71,11 +72,11 @@ class ContactListFragment : Fragment() {
     private fun listeners() {
         binding.apply {
             btnAddContact.setOnClickListener {
-                parentFragmentManager.beginTransaction().run {
-                    replace(R.id.fcvContainer, AddEditContactFragment.newInstance())
-                    addToBackStack(null)
-                    commit()
-                }
+                findNavController().navigate(
+                    ContactListFragmentDirections.actionContactListFragmentToAddEditFragment(
+                        contact = null
+                    )
+                )
             }
 
             imgSearch.setOnClickListener {
@@ -98,20 +99,20 @@ class ContactListFragment : Fragment() {
 
     private fun editContact(contact: Contact) {
 
-        parentFragmentManager.beginTransaction().run {
-            replace(R.id.fcvContainer, AddEditContactFragment.newInstance(contact))
-            addToBackStack(null)
-            commit()
-        }
+        findNavController().navigate(
+            ContactListFragmentDirections.actionContactListFragmentToAddEditFragment(
+                contact = contact
+            )
+        )
     }
 
     private fun detailContact(contact: Contact) {
 
-        parentFragmentManager.beginTransaction().run {
-            replace(R.id.fcvContainer, ContactDetailFragment.newInstance(contact))
-            addToBackStack(DETAIL)
-            commit()
-        }
+        findNavController().navigate(
+            ContactListFragmentDirections.actionContactListFragmentToContactDetailFragment(
+                contact = contact
+            )
+        )
     }
 
 
